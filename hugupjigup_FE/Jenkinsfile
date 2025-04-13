@@ -34,6 +34,18 @@ pipeline {
     }
 
     stages {
+        stage('Frontend Build') {
+            steps {
+                container('docker') {
+                    dir('hugupjigup_FE') {
+                        sh 'apk add --no-cache nodejs npm'
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
+                }
+            }
+        }
+
         stage('Docker Build & Push') {
             steps {
                 container('docker') {
@@ -41,6 +53,7 @@ pipeline {
                         def dockerImageVersion = "${env.BUILD_NUMBER}"
 
                         sh 'docker logout'
+
                         withCredentials([usernamePassword(
                             credentialsId: "${DOCKER_CREDENTIALS_ID}",
                             usernameVariable: 'DOCKER_USERNAME',
@@ -63,7 +76,7 @@ pipeline {
         always {
             withCredentials([string(credentialsId: 'discord-webhook', variable: 'DISCORD_WEBHOOK_URL')]) {
                 discordSend description: """
-                [이솝우와와] 제목 : ${currentBuild.displayName}
+                [이솝우와] 제목 : ${currentBuild.displayName}
                 결과 : ${currentBuild.result}
                 시간 : ${currentBuild.duration / 1000}s
                 """,
