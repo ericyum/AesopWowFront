@@ -8,7 +8,8 @@
   
   <script setup lang="ts">
   import { ref } from 'vue'
-  import type { BreadcrumbItem } from 'vuetify/lib/components/VBreadcrumbs/VBreadcrumbs'
+
+  import type { BreadcrumbItem } from '@/types/BreadcrumbItem'
   
   const breadcrumbItems = ref<BreadcrumbItem[]>([
     { title: 'Home', disabled: false, href: '/profile' },

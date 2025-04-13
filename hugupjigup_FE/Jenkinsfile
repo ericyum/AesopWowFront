@@ -68,7 +68,7 @@ pipeline {
                 시간 : ${currentBuild.duration / 1000}s
                 """,
                 result: currentBuild.currentResult,
-                title: "[이솝우와와]] ${env.JOB_NAME} : ${currentBuild.displayName}",
+                title: "[이솝우와] ${env.JOB_NAME} : ${currentBuild.displayName}",
                 webhookURL: "${DISCORD_WEBHOOK_URL}"
             }
         }
